@@ -147,14 +147,13 @@ function loadAndFillBooksbyCategory(search) {
     .then(books => { fillBooks(books) })
 }
 
+function submit_new_book () {
+    document.getElementById("add_book_button").addEventListener("click", addNewBook);
+}
+
 function addNewBook() {
-    fetch("/api/books", {
-        method: "POST",
-        headers: {
-            'content-type':'application/json;charset=utf-8'
-        },
-        body: JSON.stringify({title:"Bla"})
-    })
+    document.getElementById("add_book_form").submit();
+
 }
 
 function applySearch() {
