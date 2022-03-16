@@ -8,7 +8,7 @@ To use the code, just run
 npm install
 ````
 
-The run the command
+Then run the command
 
 ```
 npm run start
