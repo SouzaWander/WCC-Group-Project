@@ -3,7 +3,7 @@
         <TITLE>My Most Favourite Books</TITLE>
         <META charset="utf8" />
         <LINK rel="stylesheet" href="books.css" />
-        <SCRIPT src="add_book.js"></SCRIPT>
+        <SCRIPT src="books.js"></SCRIPT>
         <STYLE>
             .hidden {
                 display:none
@@ -52,28 +52,23 @@
             </aside>
         </ASIDE>
         <SECTION>
-            <div id="add_book_intro">
-                <h1 id="add_book_intro_title">Adding a new Book</h1>
+            <div id="readme_intro">
+                <h1 id="readme_title">Web and Cloud Project</h1>
             </div>
-            <form id="add_book_form" action="/api/books" method="post">
-                <div class="form_box">
-                Title: <input type="text" name="book_title" required><br><br>
-                Image: <input type="text" name="book_image" required><br><br>
-                Rating: <input type="text" name="book_rating" placeholder="0-5" required><br><br>
-                Number of Ratings: <input type="text" name="book_nr_ratings" required><br><br>
-                Category: <select id="cat_select" name="book_category"></select><input type="text" id="new_category">
-                <fieldset>
-                    <legend>Authors:</legend>
-                    <button onclick="extraAuthorSelect()">Add another Author</button>
-                    <select id="select_author" name="book_author">
-                        <option value="none" selected disabled hidden>Select one Author</option>
-                    </select>
-                </fieldset><br><br>
-                </div>
-                <div class="form_box">
-                    <button id="add_book_button">Add Book</button>
-                </div>
-            </form>
+            <div id="readme_text">
+                <p>This project was developed for the course Web and Cloud Computing.
+                    The purpose is to consolidate the knowledge obtained throughout the 6 weeks of classes.
+                    This is a website to display our favourite books along with features such as: </p>
+                    <ul>
+                        <li>Search Box</li>
+                        <li>Wishlist</li>
+                        <li>Sub pages to add books and check statistics</li>
+                    </ul>
+                </p>
+            </div>
+            <div id="grade_button">
+                What is our grade?: <input type="button" name="Grade" value="20 or 20">
+            </div>
         </SECTION>
         <FOOTER>
             <div>
@@ -87,6 +82,7 @@
                 <p><a href="">Section 3</a></p>
             </div>
         </FOOTER>
+    
     </BODY>
     
     </HTML>

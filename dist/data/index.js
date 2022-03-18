@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addOneBook = exports.getAllBooksCategories = exports.getAllCategories = exports.getOneBook = exports.getAllBooks = void 0;
+exports.addOneBook = exports.getAllAuthors = exports.getAllBooksCategories = exports.getAllCategories = exports.getOneBook = exports.getAllBooks = void 0;
 const init_1 = require("./init");
 function getAllBooks(search, fn) {
     const sql = `
@@ -118,6 +118,23 @@ function getAllBooksCategories(search, fn) {
     });
 }
 exports.getAllBooksCategories = getAllBooksCategories;
+function getAllAuthors(search, fn) {
+    const sql = `SELECT name FROM author WHERE name LIKE '%' || ? || '%' `;
+    const params = [search];
+    return init_1.db.all(sql, params, (err, row) => {
+        if (err) {
+            console.log("error in database: " + err);
+            fn(null);
+        }
+        else {
+            console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            console.log(row);
+            // get the authors of the book and add it to the book
+            fn(row);
+        }
+    });
+}
+exports.getAllAuthors = getAllAuthors;
 function addOneBook(s) {
     // insert one new book into the database
     // Don't forget to add the relation to authors

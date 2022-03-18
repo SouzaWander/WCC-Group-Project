@@ -1,6 +1,6 @@
 import express from 'express'
 import './data'
-import { addOneBook, getAllBooks, getAllCategories,getOneBook , getAllBooksCategories} from './data'
+import { addOneBook, getAllBooks, getAllCategories,getOneBook , getAllBooksCategories, getAllAuthors} from './data'
 
 const app = express()
 const port = 8080
@@ -34,6 +34,7 @@ app.get('/api/categories', (req,res) => {
     const search:string = ( req.query.search || "" ) as string
     getAllCategories(search, (data) => { res.send(JSON.stringify(data)) })
 })
+
 // Adding one book
 app.post('/api/books', (req,res) => {
     console.log('New Books Being added')
@@ -43,36 +44,11 @@ app.post('/api/books', (req,res) => {
     .on('end', () => { addOneBook(JSON.parse(body)) })
 })
 
+app.get('/api/authors', (req, res) => {
+    const search:string = ( req.query.search || "" ) as string
+    getAllAuthors(search, (data) => { res.send(JSON.stringify(data))})
+})
+
 app.listen( port, () => {
     console.log( `server started at http://localhost:${ port }` );
 } );
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -15,8 +15,7 @@ export const books = [
         id: 1,
         title: "Ubik",
         authors: [
-            "Philip K. Dick", "Wander"
-        ],
+            "Philip K. Dick"],
         image: "https://covers.openlibrary.org/b/id/9251896-L.jpg",
         rating: 4,
         numberrating: 300,

@@ -67,7 +67,6 @@ function menu_interaction(i){
     }
 }
 
-
 function add_wish_list(book){
     const wishlist = document.getElementById("wish_list")
     const a = document.createElement("a")
@@ -104,7 +103,6 @@ function fillCategories(categories){
         a.onclick = function(){loadAndFillBooksbyCategory(categories[c].category)}
         p.appendChild(a)
         cate.appendChild(p)
-
     }
 }
 
@@ -144,16 +142,7 @@ function loadAndFillBooksbyCategory(search) {
 
     fetch('/api/books_category'+query)
     .then(data => data.json())
-    .then(books => { fillBooks(books) })
-}
-
-function submit_new_book () {
-    document.getElementById("add_book_button").addEventListener("click", addNewBook);
-}
-
-function addNewBook() {
-    document.getElementById("add_book_form").submit();
-
+    .then(books => {fillBooks(books) })
 }
 
 function applySearch() {
@@ -173,7 +162,6 @@ function installOtherEventHandlers() {
 
 window.onload = () => {
     hinde_submenus()
-
     loadAndFillBooks() // If no parameter is given, search is undefined
     installOtherEventHandlers()
     getCategories()

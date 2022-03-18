@@ -42,6 +42,10 @@ app.post('/api/books', (req, res) => {
         .on('data', (data) => body += data)
         .on('end', () => { (0, data_1.addOneBook)(JSON.parse(body)); });
 });
+app.get('/api/authors', (req, res) => {
+    const search = (req.query.search || "");
+    (0, data_1.getAllAuthors)(search, (data) => { res.send(JSON.stringify(data)); });
+});
 app.listen(port, () => {
     console.log(`server started at http://localhost:${port}`);
 });

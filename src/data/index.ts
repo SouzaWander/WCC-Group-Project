@@ -7,7 +7,6 @@ export function getAllBooks(search:string, fn:(books:Book[]) => void) {
               SELECT * FROM Book b
               WHERE b.title LIKE '%' || ? || '%'
               `
-
   const params:string[] = [search]
   return db.all(sql, params, (err, rows) =>{
     if( err ) {
@@ -24,16 +23,13 @@ export function getAllBooks(search:string, fn:(books:Book[]) => void) {
         db.all(sql2, params2, (err2, a) =>{
           if( err2 ) {
             console.log("error in database: "+err2)
-
           } else {
             const la:string[] = [];
             // Now get the authors for each book and add it to the result
-
             a.forEach(author =>{
               la.push(author.name)
             })
             row.authors = la
-
             console.log(row)
           }
         })
@@ -44,7 +40,6 @@ export function getAllBooks(search:string, fn:(books:Book[]) => void) {
     }
   })
 }
-
 
 export function getOneBook(id:number, fn:(book:Book|null) => void) {
   const sql = "SELECT * FROM Book WHERE id = ?"
@@ -121,8 +116,26 @@ export function getAllBooksCategories(search:string, fn:(books:Book[]) => void) 
     }
   })
 }
+
+export function getAllAuthors(search:string,fn:(authors:string[]|null)=> void){
+  const sql = `SELECT name FROM author WHERE name LIKE '%' || ? || '%' `
+  const params:string[] = [search]
+  return db.all(sql, params, (err, row) =>{
+    if( err ) {
+      console.log("error in database: "+err)
+      fn(null)
+    } else {
+      console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+      console.log(row)
+      // get the authors of the book and add it to the book
+      fn(row)
+    }
+  })
+}
+
 export function addOneBook(s:Book) {
   // insert one new book into the database
   // Don't forget to add the relation to authors
   // The relation to authors is established using the author identifiers
 }
+
