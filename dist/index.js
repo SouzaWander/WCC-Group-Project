@@ -35,7 +35,7 @@ app.get('/api/categories', (req, res) => {
     (0, data_1.getAllCategories)(search, (data) => { res.send(JSON.stringify(data)); });
 });
 // Adding one book
-app.post('/api/books', (req, res) => {
+app.post("/api/books", (req, res) => {
     console.log('New Books Being added');
     let body = "";
     req

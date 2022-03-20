@@ -68,7 +68,6 @@ export function getAllCategories(search:string,fn:(categories:string[]|null)=> v
       console.log(row)
       // get the authors of the book and add it to the book
       fn(row)
-
     }
   })
 }
@@ -79,7 +78,6 @@ export function getAllBooksCategories(search:string, fn:(books:Book[]) => void) 
               SELECT * FROM Book b
               WHERE category LIKE '%' || ? || '%'
               `
-
   const params:string[] = [search]
   return db.all(sql, params, (err, rows) =>{
     if( err ) {
@@ -96,16 +94,13 @@ export function getAllBooksCategories(search:string, fn:(books:Book[]) => void) 
         db.all(sql2, params2, (err2, a) =>{
           if( err2 ) {
             console.log("error in database: "+err2)
-
           } else {
             const la:string[] = [];
             // Now get the authors for each book and add it to the result
-
             a.forEach(author =>{
               la.push(author.name)
             })
             row.authors = la
-
             console.log(row)
           }
         })
@@ -134,8 +129,49 @@ export function getAllAuthors(search:string,fn:(authors:string[]|null)=> void){
 }
 
 export function addOneBook(s:Book) {
-  // insert one new book into the database
-  // Don't forget to add the relation to authors
-  // The relation to authors is established using the author identifiers
+
+  const idMax = `
+  SELECT MAX(id) as maxid FROM book
+  `
+  let aux: number;
+  db.all(idMax, [], (err, row) =>{
+    if( err ) {
+      console.log("error in database: "+err)
+    } else {
+      s.id = row[0].maxid + 1
+      aux = row[0].maxid + 1
+      const booksql = `
+    INSERT INTO book (id, title, image, category, rating, numberrating) VALUES (?,?,?,?,?,?)
+    `
+    db.run(booksql, [s.id, s.title, s.image, s.category, s.rating, s.numberrating])
+    }
+
+  })
+
+  // const booksql = `
+  // INSERT INTO book (id, title, image, category, rating, numberrating) VALUES (?,?,?,?,?,?)
+  // `
+  // db.run(booksql, [s.id, s.title, s.image, s.category, s.rating, s.numberrating])
+
+  const authorsql =
+      `INSERT INTO author (name) SELECT @_name
+                    WHERE NOT EXISTS(SELECT name FROM author WHERE name = @_name)`
+      s.authors.forEach(author => {
+        db.run(authorsql, [author])
+      })
+  const relation = 'INSERT INTO author_book (author_id, book_id) VALUES (?,?)'
+  const sql2 = `SELECT id, name FROM author`;
+  const params2:number[] = []
+  db.all(sql2, params2, (err2, auth) =>{
+    if( err2 ) {
+        console.log("error in database: "+err2)
+    } else {
+        auth.forEach(a => {
+            if(s.authors.includes(a.name)){
+                db.run(relation, [a.id, aux ])
+            }
+        });
+    }
+    })
 }
 

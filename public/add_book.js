@@ -40,32 +40,73 @@ function getAuthorsSelect() {
 }
 
 function populateAuthorSelect(authors) {
-    console.log(authors)
     const sel_auth = document.getElementById("select_author");
     for (let i = 0; i < authors.length;  i ++) {
         const author_option = document.createElement("option");
         author_option.value = authors[i].name;
-        console.log(authors[i].name)
         author_option.innerText = author_option.value 
         sel_auth.append(author_option);
     }
 }
 
-function extraAuthorSelect() {
+function getAuthorsSelectSecond() {
+    fetch('/api/authors')
+    .then(data => data.json())
+    .then(authors => {extraAuthorSelect(authors)})
+}
+
+function extraAuthorSelect(authors) {
+    const sel_but = document.getElementById("fieldset_authors");
     const extra_author = document.createElement("select");
     extra_author.setAttribute("id", "select_author");
-    document.body.appendChild(extra_author);
-    const author_options = document.createElement("option");
+    sel_but.append(extra_author);
 
+    for (let i = 0; i < authors.length;  i ++) {
+        const author_option = document.createElement("option");
+        author_option.value = authors[i].name;
+        author_option.innerText = author_option.value 
+        extra_author.append(author_option);
+    }
 }
 
-function submit_new_book () {
-    document.getElementById("add_book_button").addEventListener("click", addNewBook);
+function bookToAdd () {
+    const book_id = 100
+    const book_title = document.getElementById("book_title").value
+    const book_image = document.getElementById("book_image").value
+    const book_rating = document.getElementById("book_rating").value
+    const book_nr_ratings = document.getElementById("book_nr_ratings").value
+    const book_cat_box = document.getElementById("new_category").value
+    const book_category = document.getElementById("cat_select").value
+    const book_author = document.getElementById("select_author").value
+
+    let book_cat_to_add;
+    if (book_cat_box.length == 0) {
+        book_cat_to_add = book_category
+    } else {
+        book_cat_to_add = book_cat_box
+    }
+
+    const book_to_add = {
+        id: book_id,
+        title: book_title,
+        image: book_image,
+        rating: book_rating,
+        numberrating: book_nr_ratings,
+        category: book_cat_to_add,
+        authors: [book_author]
+    }
+    submitNewBook(book_to_add)
 }
 
-function addNewBook() {
-    document.getElementById("add_book_form").submit();
-
+function submitNewBook(book_to_add) {
+    fetch("/api/books", {
+        method: "POST",
+        headers: {
+            'content-type':'application/json;charset=utf-8'
+        },
+        body: JSON.stringify(book_to_add)
+    })
+    window.location.href="index.html"
 }
 
 window.onload = () => {

@@ -55,23 +55,20 @@
             <div id="add_book_intro">
                 <h1 id="add_book_intro_title">Adding a new Book</h1>
             </div>
-            <form id="add_book_form" action="/api/books" method="post">
+            <form id="add_book_form">
                 <div class="form_box">
-                Title: <input type="text" name="book_title" required><br><br>
-                Image: <input type="text" name="book_image" required><br><br>
-                Rating: <input type="text" name="book_rating" placeholder="0-5" required><br><br>
-                Number of Ratings: <input type="text" name="book_nr_ratings" required><br><br>
-                Category: <select id="cat_select" name="book_category"></select><input type="text" id="new_category">
-                <fieldset>
+                Title: <input type="text" id="book_title" ><br><br>
+                Image: <input type="text" id="book_image" ><br><br>
+                Rating: <input type="text" id="book_rating" placeholder="0-5" required><br><br>
+                Number of Ratings: <input type="text" id="book_nr_ratings" ><br><br>
+                Category: <select id="cat_select"></select><input type="text" id="new_category">
+                <fieldset id="fieldset_authors">
                     <legend>Authors:</legend>
-                    <button onclick="extraAuthorSelect()">Add another Author</button>
-                    <select id="select_author" name="book_author">
-                        <option value="none" selected disabled hidden>Select one Author</option>
-                    </select>
+                    <button id="another_author" type="button" onclick="getAuthorsSelectSecond()">Add another Author</button>
+                    <select id="select_author"></select>
                 </fieldset><br><br>
-                </div>
                 <div class="form_box">
-                    <button id="add_book_button">Add Book</button>
+                    <button id="add_book_button" type="button" onclick="bookToAdd()">Add Book</input>
                 </div>
             </form>
         </SECTION>

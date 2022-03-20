@@ -36,12 +36,12 @@ app.get('/api/categories', (req,res) => {
 })
 
 // Adding one book
-app.post('/api/books', (req,res) => {
+app.post("/api/books", (req,res) => {
     console.log('New Books Being added')
     let body = ""
     req
     .on('data', (data) => body += data)
-    .on('end', () => { addOneBook(JSON.parse(body)) })
+    .on('end', () => {addOneBook(JSON.parse(body)) })
 })
 
 app.get('/api/authors', (req, res) => {
