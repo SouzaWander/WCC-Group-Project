@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addOneBook = exports.getAllAuthors = exports.getAllBooksCategories = exports.getAllCategories = exports.getOneBook = exports.getAllBooks = void 0;
+exports.getRatingStats = exports.getCategoryStats = exports.addOneBook = exports.getAllAuthors = exports.getAllBooksCategories = exports.getAllCategories = exports.getOneBook = exports.getAllBooks = void 0;
 const init_1 = require("./init");
 function getAllBooks(search, fn) {
     const sql = `
@@ -14,7 +14,6 @@ function getAllBooks(search, fn) {
             fn([]);
         }
         else {
-            console.log(rows);
             // Now get the authors for each book and add it to the result
             const sql2 = `SELECT name FROM author_book ab
               JOIN author a on a.id = ab.author_id
@@ -32,11 +31,9 @@ function getAllBooks(search, fn) {
                             la.push(author.name);
                         });
                         row.authors = la;
-                        console.log(row);
                     }
                 });
             });
-            console.log(rows);
             setTimeout(() => fn(rows), 1000);
             // fn(rows)
         }
@@ -52,8 +49,6 @@ function getOneBook(id, fn) {
             fn(null);
         }
         else {
-            console.log("hi");
-            console.log(row);
             // get the authors of the book and add it to the book
             fn(row);
         }
@@ -70,7 +65,6 @@ function getAllCategories(search, fn) {
         }
         else {
             console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-            console.log(row);
             // get the authors of the book and add it to the book
             fn(row);
         }
@@ -89,7 +83,6 @@ function getAllBooksCategories(search, fn) {
             fn([]);
         }
         else {
-            console.log(rows);
             // Now get the authors for each book and add it to the result
             const sql2 = `SELECT name FROM author_book ab
               JOIN author a on a.id = ab.author_id
@@ -107,11 +100,9 @@ function getAllBooksCategories(search, fn) {
                             la.push(author.name);
                         });
                         row.authors = la;
-                        console.log(row);
                     }
                 });
             });
-            console.log(rows);
             setTimeout(() => fn(rows), 1000);
             // fn(rows)
         }
@@ -128,7 +119,6 @@ function getAllAuthors(search, fn) {
         }
         else {
             console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-            console.log(row);
             // get the authors of the book and add it to the book
             fn(row);
         }
@@ -179,4 +169,30 @@ function addOneBook(s) {
     });
 }
 exports.addOneBook = addOneBook;
+// Getting the category stats for chartJS
+function getCategoryStats(fn) {
+    const sql = "SELECT category, COUNT(*) AS count FROM book GROUP BY category";
+    init_1.db.all(sql, [], (err, rows) => {
+        if (err) {
+            console.log("Error in database: " + err);
+        }
+        else {
+            fn(rows);
+        }
+    });
+}
+exports.getCategoryStats = getCategoryStats;
+// Getting the rating stats for chartJS
+function getRatingStats(fn) {
+    const sql = "SELECT rating, COUNT(*) AS count FROM book GROUP BY rating";
+    init_1.db.all(sql, [], (err, rows) => {
+        if (err) {
+            console.log("Error in database: " + err);
+        }
+        else {
+            fn(rows);
+        }
+    });
+}
+exports.getRatingStats = getRatingStats;
 //# sourceMappingURL=index.js.map

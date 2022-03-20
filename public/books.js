@@ -16,7 +16,6 @@ function createBookBox(book) {
     const author = document.createElement("h3")
     author.innerText = book.authors
 
-    console.log(book.authors)
     div2.appendChild(title)
     div2.appendChild(author)
     div1.appendChild(div2)
@@ -94,11 +93,9 @@ function hinde_submenus(){
 
 function fillCategories(categories){
     const cate = document.getElementById("categories");
-    console.log(categories)
     for(let c in categories) {
         const p = document.createElement("p")
         const a = document.createElement("a")
-        console.log(c)
         a.innerText=`${categories[c].category} (${categories[c].n_cate})`
         a.onclick = function(){loadAndFillBooksbyCategory(categories[c].category)}
         p.appendChild(a)
@@ -116,7 +113,6 @@ function getCategories(search){
 }
 
 function fillBooks(books) {
-    console.log(books)
     const list = document.getElementById("listofbooks")
     list.innerHTML = ""
     for (const idx in books) {
@@ -147,16 +143,12 @@ function loadAndFillBooksbyCategory(search) {
 
 function applySearch() {
     const input = document.getElementById("searchbox")
-    console.log(input)
     const text = input.value
     loadAndFillBooks(text)
 }
 
 function installOtherEventHandlers() {
-    // Events to open and close menus
-    // ...
-
-    // Events to call loadAndFillBooks with a new search value
+    
     document.getElementById("searchbutton").onclick = applySearch
 }
 

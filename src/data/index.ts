@@ -13,7 +13,6 @@ export function getAllBooks(search:string, fn:(books:Book[]) => void) {
       console.log("error in database: "+err)
       fn([])
     } else {
-      console.log(rows)
       // Now get the authors for each book and add it to the result
       const sql2 = `SELECT name FROM author_book ab
               JOIN author a on a.id = ab.author_id
@@ -30,11 +29,9 @@ export function getAllBooks(search:string, fn:(books:Book[]) => void) {
               la.push(author.name)
             })
             row.authors = la
-            console.log(row)
           }
         })
       })
-      console.log(rows)
       setTimeout(() => fn(rows), 1000)
       // fn(rows)
     }
@@ -49,8 +46,6 @@ export function getOneBook(id:number, fn:(book:Book|null) => void) {
       console.log("error in database: "+err)
       fn(null)
     } else {
-      console.log("hi")
-      console.log(row)
       // get the authors of the book and add it to the book
       fn(row)
     }
@@ -65,7 +60,6 @@ export function getAllCategories(search:string,fn:(categories:string[]|null)=> v
       fn(null)
     } else {
       console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-      console.log(row)
       // get the authors of the book and add it to the book
       fn(row)
     }
@@ -84,7 +78,6 @@ export function getAllBooksCategories(search:string, fn:(books:Book[]) => void) 
       console.log("error in database: "+err)
       fn([])
     } else {
-      console.log(rows)
       // Now get the authors for each book and add it to the result
       const sql2 = `SELECT name FROM author_book ab
               JOIN author a on a.id = ab.author_id
@@ -101,11 +94,9 @@ export function getAllBooksCategories(search:string, fn:(books:Book[]) => void) 
               la.push(author.name)
             })
             row.authors = la
-            console.log(row)
           }
         })
       })
-      console.log(rows)
       setTimeout(() => fn(rows), 1000)
       // fn(rows)
     }
@@ -121,7 +112,6 @@ export function getAllAuthors(search:string,fn:(authors:string[]|null)=> void){
       fn(null)
     } else {
       console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-      console.log(row)
       // get the authors of the book and add it to the book
       fn(row)
     }
@@ -174,4 +164,28 @@ export function addOneBook(s:Book) {
     }
     })
 }
+
+// Getting the category stats for chartJS
+export function getCategoryStats(fn:(category:any[]) => void) {
+  const sql = "SELECT category, COUNT(*) AS count FROM book GROUP BY category"
+  db.all(sql, [], (err, rows) =>{
+    if( err ) {
+      console.log("Error in database: " + err)
+    } else {
+      fn(rows)
+    }
+  })
+  }
+
+  // Getting the rating stats for chartJS
+export function getRatingStats(fn:(rating:any[]) => void) {
+  const sql = "SELECT rating, COUNT(*) AS count FROM book GROUP BY rating"
+  db.all(sql, [], (err, rows) =>{
+    if( err ) {
+      console.log("Error in database: " + err)
+    } else {
+      fn(rows)
+    }
+  })
+  }
 

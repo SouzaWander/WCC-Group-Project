@@ -46,6 +46,14 @@ app.get('/api/authors', (req, res) => {
     const search = (req.query.search || "");
     (0, data_1.getAllAuthors)(search, (data) => { res.send(JSON.stringify(data)); });
 });
+// Get category stats for chartJS
+app.get('/api/categorystats', (req, res) => {
+    (0, data_1.getCategoryStats)((data) => { res.send(JSON.stringify(data)); });
+});
+// Get rating stats for chartJS
+app.get('/api/rating', (req, res) => {
+    (0, data_1.getRatingStats)((data) => { res.send(JSON.stringify(data)); });
+});
 app.listen(port, () => {
     console.log(`server started at http://localhost:${port}`);
 });

@@ -1,6 +1,6 @@
 import express from 'express'
 import './data'
-import { addOneBook, getAllBooks, getAllCategories,getOneBook , getAllBooksCategories, getAllAuthors} from './data'
+import { addOneBook, getAllBooks, getAllCategories,getOneBook , getAllBooksCategories, getAllAuthors, getCategoryStats, getRatingStats} from './data'
 
 const app = express()
 const port = 8080
@@ -47,6 +47,16 @@ app.post("/api/books", (req,res) => {
 app.get('/api/authors', (req, res) => {
     const search:string = ( req.query.search || "" ) as string
     getAllAuthors(search, (data) => { res.send(JSON.stringify(data))})
+})
+
+// Get category stats for chartJS
+app.get('/api/categorystats', (req,res) => {
+    getCategoryStats((data) => { res.send(JSON.stringify(data)) })
+})
+
+// Get rating stats for chartJS
+app.get('/api/rating', (req,res) => {
+    getRatingStats((data) => { res.send(JSON.stringify(data)) })
 })
 
 app.listen( port, () => {

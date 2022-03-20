@@ -77,7 +77,12 @@ function bookToAdd () {
     const book_nr_ratings = document.getElementById("book_nr_ratings").value
     const book_cat_box = document.getElementById("new_category").value
     const book_category = document.getElementById("cat_select").value
-    const book_author = document.getElementById("select_author").value
+    //const book_author = document.getElementById("select_author").value
+    const book_author = document.getElementById("fieldset_authors").getElementsByTagName("select") 
+    const list_authors = []
+    for (i=0; i < book_author.length; i++) {
+        list_authors.push(book_author[i].value);
+    } 
 
     let book_cat_to_add;
     if (book_cat_box.length == 0) {
@@ -93,7 +98,7 @@ function bookToAdd () {
         rating: book_rating,
         numberrating: book_nr_ratings,
         category: book_cat_to_add,
-        authors: [book_author]
+        authors: list_authors
     }
     submitNewBook(book_to_add)
 }
