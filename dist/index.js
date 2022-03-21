@@ -35,12 +35,24 @@ app.get('/api/categories', (req, res) => {
     (0, data_1.getAllCategories)(search, (data) => { res.send(JSON.stringify(data)); });
 });
 // Adding one book
-app.post('/api/books', (req, res) => {
+app.post("/api/books", (req, res) => {
     console.log('New Books Being added');
     let body = "";
     req
         .on('data', (data) => body += data)
         .on('end', () => { (0, data_1.addOneBook)(JSON.parse(body)); });
+});
+app.get('/api/authors', (req, res) => {
+    const search = (req.query.search || "");
+    (0, data_1.getAllAuthors)(search, (data) => { res.send(JSON.stringify(data)); });
+});
+// Get category stats for chartJS
+app.get('/api/categorystats', (req, res) => {
+    (0, data_1.getCategoryStats)((data) => { res.send(JSON.stringify(data)); });
+});
+// Get rating stats for chartJS
+app.get('/api/rating', (req, res) => {
+    (0, data_1.getRatingStats)((data) => { res.send(JSON.stringify(data)); });
 });
 app.listen(port, () => {
     console.log(`server started at http://localhost:${port}`);

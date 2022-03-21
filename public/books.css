@@ -57,7 +57,7 @@ NAV > * {
     display: inline-block;
 }
 
-#searchbox {
+#searchboxarea {
   float: right;
   margin: 15px;
 }
@@ -187,3 +187,16 @@ UL.submenu > LI {
     padding: 10px;
     width: 120px;
 }
+
+.charts {
+    display:flex;
+    list-style: none;
+    padding: 20px;
+    margin-inline-start: 20px;
+}  
+
+canvas {
+    padding: 20px;
+    margin-inline-start: 20px;
+    margin-left: 10px;
+}  

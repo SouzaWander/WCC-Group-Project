@@ -16,7 +16,6 @@ function createBookBox(book) {
     const author = document.createElement("h3")
     author.innerText = book.authors
 
-    console.log(book.authors)
     div2.appendChild(title)
     div2.appendChild(author)
     div1.appendChild(div2)
@@ -67,7 +66,6 @@ function menu_interaction(i){
     }
 }
 
-
 function add_wish_list(book){
     const wishlist = document.getElementById("wish_list")
     const a = document.createElement("a")
@@ -95,16 +93,13 @@ function hinde_submenus(){
 
 function fillCategories(categories){
     const cate = document.getElementById("categories");
-    console.log(categories)
     for(let c in categories) {
         const p = document.createElement("p")
         const a = document.createElement("a")
-        console.log(c)
         a.innerText=`${categories[c].category} (${categories[c].n_cate})`
         a.onclick = function(){loadAndFillBooksbyCategory(categories[c].category)}
         p.appendChild(a)
         cate.appendChild(p)
-
     }
 }
 
@@ -118,7 +113,6 @@ function getCategories(search){
 }
 
 function fillBooks(books) {
-    console.log(books)
     const list = document.getElementById("listofbooks")
     list.innerHTML = ""
     for (const idx in books) {
@@ -144,37 +138,22 @@ function loadAndFillBooksbyCategory(search) {
 
     fetch('/api/books_category'+query)
     .then(data => data.json())
-    .then(books => { fillBooks(books) })
-}
-
-function addNewBook() {
-    fetch("/api/books", {
-        method: "POST",
-        headers: {
-            'content-type':'application/json;charset=utf-8'
-        },
-        body: JSON.stringify({title:"Bla"})
-    })
+    .then(books => {fillBooks(books) })
 }
 
 function applySearch() {
     const input = document.getElementById("searchbox")
-    console.log(input)
     const text = input.value
     loadAndFillBooks(text)
 }
 
 function installOtherEventHandlers() {
-    // Events to open and close menus
-    // ...
-
-    // Events to call loadAndFillBooks with a new search value
+    
     document.getElementById("searchbutton").onclick = applySearch
 }
 
 window.onload = () => {
     hinde_submenus()
-
     loadAndFillBooks() // If no parameter is given, search is undefined
     installOtherEventHandlers()
     getCategories()
